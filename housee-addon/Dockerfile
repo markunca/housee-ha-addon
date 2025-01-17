@@ -1,22 +1,23 @@
-# Use a base image
-FROM alpine:3.17
+FROM python:3.10-slim
 
-# Install necessary dependencies
-RUN apk add --no-cache \
+# Install necessary system dependencies
+RUN apt-get update && apt-get install -y \
     bash \
-    curl \
-    python3 \
-    py3-pip \
-    && pip install flask requests
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Set the working directory
 WORKDIR /app
 
-# Copy the add-on files
-COPY run.sh /app/run.sh
+# Copy requirements file and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Ensure the script is executable
-RUN chmod +x /app/run.sh
+# Copy the application code
+COPY app.py .
 
-# Set the default command
-CMD ["/app/run.sh"]
+# Expose the port for the app
+EXPOSE 5000
+
+# Run the application
+CMD ["python", "app.py"]
