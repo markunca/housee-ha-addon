@@ -1,5 +1,5 @@
 {
-  "name": "Home Assistant Proxy",
+  "name": "Housee Integration",
   "version": "1.0.0",
   "slug": "ha_proxy",
   "description": "Proxy to expose all Home Assistant entities and control them",
