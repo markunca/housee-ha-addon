@@ -116,10 +116,10 @@ def create_zip(output_path):
     import zipfile
 
     addon_files = {
-        "config.json": ADDON_CONFIG,
+        "config.json": CONFIG_JSON_CONTENT,
         "Dockerfile": DOCKERFILE_CONTENT,
-        "proxy/app.py": open(__file__).read(),
-        "proxy/requirements.txt": REQUIREMENTS_CONTENT,
+        "app.py": APP_PY_CONTENT,
+        "requirements.txt": REQUIREMENTS_CONTENT,
     }
 
     with zipfile.ZipFile(output_path, "w") as zipf:
@@ -127,45 +127,11 @@ def create_zip(output_path):
             zipf.writestr(file_name, content)
 
 
-# Static content for the addon files
-ADDON_CONFIG = """{
-  "name": "Home Assistant Proxy",
-  "version": "1.0.0",
-  "slug": "ha_proxy",
-  "description": "Proxy to expose all Home Assistant entities and control them",
-  "arch": ["armv7", "arm64", "amd64", "i386"],
-  "startup": "application",
-  "boot": "auto",
-  "ingress": false,
-  "options": {},
-  "schema": {},
-  "ports": {
-    "5000/tcp": 5000
-  },
-  "host_network": true
-}
-"""
-
-DOCKERFILE_CONTENT = """FROM python:3.10-slim
-
-RUN apt-get update && apt-get install -y \\
-    build-essential \\
-    && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
-
-COPY proxy/requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY proxy/ .
-
-CMD ["python", "app.py"]
-"""
-
-REQUIREMENTS_CONTENT = """flask
-requests
-"""
+# Static content for the add-on files
+CONFIG_JSON_CONTENT = open("config.json").read()
+DOCKERFILE_CONTENT = open("Dockerfile").read()
+APP_PY_CONTENT = open("app.py").read()
+REQUIREMENTS_CONTENT = open("requirements.txt").read()
 
 # Start the token renewal thread
 Thread(target=renew_token_if_needed, daemon=True).start()
