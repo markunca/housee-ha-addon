@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "slug": "homeassistant_proxy",
   "description": "Proxy to expose all Home Assistant entities and control them",
-  "arch": ["armv7", "arm64", "amd64", "i386"],
+  "arch": ["armv7", "amd64", "i386"],
   "startup": "application",
   "boot": "auto",
   "ingress": false,
