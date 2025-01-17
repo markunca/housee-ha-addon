@@ -1,0 +1,16 @@
+{
+  "name": "Home Assistant Proxy",
+  "version": "1.0.0",
+  "slug": "ha_proxy",
+  "description": "Proxy to expose all Home Assistant entities and control them",
+  "arch": ["armv7", "arm64", "amd64", "i386"],
+  "startup": "application",
+  "boot": "auto",
+  "ingress": false,
+  "options": {},
+  "schema": {},
+  "ports": {
+    "5000/tcp": 5000
+  },
+  "host_network": true
+}
